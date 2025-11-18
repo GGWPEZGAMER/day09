@@ -27,9 +27,10 @@ There are 4 types of Services:
 -ClusterIP(For Internal access)  
 -NodePort(To access the application on a particular port)    
 -LoadBalancer(To access the application on a domain name or IP address without using the port number)  
--External (To use an external DNS for routing)  
+-External (To use an external DNS for routing) 
+  
 ClusterIP  
-- After node, creating Service with yaml that called ClusterIP  
+After node, creating Service with yaml that called ClusterIP  
 vim myapp.yaml  
 ```yaml
 apiVersion: v1
@@ -51,8 +52,7 @@ kubectl apply -f myapp.yaml
 ```bash
 kubectl get svc
 ```
-myapp          ClusterIP      10.96.208.170   <none>        80/TCP         31m  
-- Creating deployment of myapp  
+Creating deployment of myapp  
 vim deploy.yaml  
 ```yaml
 apiVersion: apps/v1
@@ -80,21 +80,20 @@ spec:
 ```bash
 kubectl apply -f deploy.yaml
 ```
-myapp-86dd4b98b5-r7l9s   1/1     Running   0          29m  
-- To check the nginx with specific port number  
+To check the nginx with specific port number  
 ```bash
 kubectl run tmp-pod --rm -it --image=busybox -- sh
 ```
-- When you are inside the pod.  
+When you are inside the pod.  
 ```bash
 wget http://<internal-ip>
 ```
-- You will see the Welcome to nginx  
+You will see the Welcome to nginx  
 ```bash
 kubectl get svc
 ```
-- You will see the internal ip address of services  
-- TO communicate from outside browser  
+You will see the internal ip address of services  
+To communicate from outside browser  
 NodePort  
 vim nodeport.yaml  
 ```yaml
@@ -116,8 +115,7 @@ spec:
 ```bash
 kubectl apply -f nodeport.yaml
 ```
-nodeport-svc   NodePort       10.96.14.61     <none>        80:30001/TCP   23m  
-- Go to the browser and type  
+Go to the browser and type  
 ```bash
 localhost:30001
 ```
@@ -125,7 +123,7 @@ LoadBalancer
   
 Your loadbalancer service will act as nodeport if you are not using any managed cloud Kubernetes such as GKE,AKS,EKS etc.   
 In a managed cloud environment, Kubernetes creates a load balancer within the cloud project, which redirects the traffic to the Kubernetes Loadbalancer service.  
-- To create loadbalancer  
+To create loadbalancer  
 vim lb.yaml  
 ```yaml
 apiVersion: v1
@@ -144,7 +142,6 @@ spec:
 ```bash
 kubectl apply -f lb.yaml
 ```
-lb-svc         LoadBalancer   10.96.200.250   <pending>     80:32657/TCP   14m  
 ExternalName  
 ```yaml
 apiVersion: v1
